@@ -7,15 +7,15 @@
                 font-size: x-large;
             }
             .counter {
-                margin: 50px 30px 50px 80px;
-                box-sizing: border-box;
+                display: inline-block;
+                width: 1.8em;
+                text-align: center;
             }
             .importantNums {
-                padding-top: 50px;
-                padding-right: 30px;
-                padding-bottom: 50px;
-                padding-left: 80px;
-                box-sizing: border-box;
+                display: inline-block;
+                width: 3em;
+                border: 1px solid #000;
+                text-align: center;
             }
             .fade {
                 animation: fadeOut 1s forwards;
@@ -173,7 +173,7 @@
             <td id="hit_anim" hidden="true"><img src="assets/hit_anim_2.gif" height="80" width="320"></td>
             <td><img src="assets/gambucklogo.png"></td>
             <td><p id="gambuck_count" class="counter"></p></td>
-            <td id="gambucks_display" class="importantNums"></td></table>
+            <td id="gambucks_display" class="counter"></td></table>
         <img id="gamblin" src="assets/KEEPGAMBLIN_4.png" hidden="true">
         <img id="ohyeah_legacy" src="assets/OHYEAH.png" hidden="true">
         <img id="ohyeah" src="assets/OHYEAH_2.png" hidden="true">
