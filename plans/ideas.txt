@@ -1,2 +1,19 @@
 start with 10 gambucks
-each keep gambling -0.5 gambuck
+each keep gambling -0.25 gambucks
+sweet +1
+oh yeah +10
+oh fuck yeah +50
+go below 0 gambucks -> loss
+win condition: get a certain amount of gambucks to buy an item?
+    pros for this approach: gives player freedom to get to goal how they will (could technically win by attrition)
+    could give the player many different ways to earn money that require different gambles/bets to be made to pay off (facilitated through items in shop)
+item shop ideas:
+    should start innocuous
+    should interact with each other...each item should give the player an RPG-like scenario (very *very* light "RPG" - (e.g., "do you want to spend x gambucks to hire a mercenary? 50% chance of success with 150% payout" then "you were caught giving money to mercs..." changes access to other items?))
+starter item: avoid the tedium of early stages (could decrease the fun factor of getting a big hit early on...)
+    should send the player on a specific "path"
+hit animations per face type:
+    .sweet
+    .purple
+    .green
+    .keepgamblin
