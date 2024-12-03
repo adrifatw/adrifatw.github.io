@@ -21,6 +21,26 @@
                 animation: fadeOut 1s forwards;
                 font-size: xx-large;
             }
+            .sweet {
+                animation: fadeOut 1s forwards;
+                font-size: large;
+                color: pink;
+            }
+            .purple {
+                animation: fadeOut 1s forwards;
+                font-size: xx-large;
+                color: purple;
+            }
+            .green {
+                animation: fadeOut 1s forwards;
+                font-size: xx-large;
+                color: green;
+            }
+            .keepgamblin {
+                animation: fadeOut 1s forwards;
+                font-size: large;
+                color: red;
+            }
             @keyframes fadeOut {
                 0% {opacity: 1;}
                 100% {opacity: 0;}
@@ -64,20 +84,16 @@
                 anim.hidden = false;
                 img.hidden = true;
             }
-            function gambucksAnim(amnt) {
+            function gambucksAnim(amnt, name) {
                 let insertAnim;
                 switch(amnt) {
-                    case sweet_amnt:
-                        insertAnim = "<p class=fade style=color:pink; font-size:5em;> +" + amnt + "</p>"
+                    //if loss
+                    case keep_gamblin:
+                        insertAnim = "<p class="+name+"> -" + amnt + "</p>"
                         break;
-                    case purple_amnt:
-                        insertAnim = "<p class=fade style=color:purple; font-size:5em;> +" + amnt + "</p>"
-                        break;
-                    case green_amnt:
-                        insertAnim = "<p class=fade style=color:green; font-size:5em;> +" + amnt + "</p>"
-                        break;
+                    //if any kind of hit
                     default:
-                        insertAnim = "<p class=fade style=color:red; font-size:5em;> -" + amnt + "</p>"
+                        insertAnim = "<p class="+name+"> +" + amnt + "</p>"
                 }
                 document.getElementById("gambucks_display").innerHTML = insertAnim;
             }
@@ -99,7 +115,7 @@
                     showHit(hitanim, hitimg);
                     img = document.getElementById("sweet")
                     gambucks += sweet_amnt;
-                    gambucksAnim(1);
+                    gambucksAnim(1, "sweet");
                     refreshStats();
                 }
                 //check if "purple"
@@ -117,7 +133,7 @@
                     }
                     numPurples++;
                     gambucks += purple_amnt;
-                    gambucksAnim(10);
+                    gambucksAnim(10, "purple");
                     refreshStats();
                 }
                 //check if green
@@ -130,13 +146,13 @@
                     }
                     numGreens++;
                     gambucks += green_amnt;
-                    gambucksAnim(50);
+                    gambucksAnim(50, "green");
                     refreshStats();
                 }
                 //no hit
                 else {
                     gambucks -= keep_gamblin;
-                    gambucksAnim(keep_gamblin);
+                    gambucksAnim(keep_gamblin, "keepgamblin");
                     refreshStats();
                 }
                 //handle images staying in bounds
@@ -152,7 +168,7 @@
         </script>
     </head>
     <body onload="init();">
-        <table><td><img src="assets/logo_anim (2).gif" width="320" height="160"></td>
+        <table><td><img src="assets/logo_anim (2).gif" width="320" height="160" hidden="true"></td>
             <td id="hitimg"><img src="assets/hit.png" style="opacity:0.25"></td>
             <td id="hit_anim" hidden="true"><img src="assets/hit_anim_2.gif" height="80" width="320"></td>
             <td><img src="assets/gambucklogo.png"></td>
