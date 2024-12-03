@@ -1,0 +1,168 @@
+<html>
+    <head>
+        <title>RNG Simulator</title>
+        <style>
+            * {
+                font-size: x-large;
+            }
+            .counter {
+                margin: 50px 30px 50px 80px;
+                box-sizing: border-box;
+            }
+            .importantNums {
+                padding-top: 50px;
+                padding-right: 30px;
+                padding-bottom: 50px;
+                padding-left: 80px;
+                box-sizing: border-box;
+            }
+            .fade {
+                animation: fadeOut 1s forwards;
+                font-size: xx-large;
+            }
+            @keyframes fadeOut {
+                0% {opacity: 1;}
+                100% {opacity: 0;}
+            }
+        </style>
+        <script type="text/javascript">
+            let maxX = 800, maxY = 600
+            let rectHeight = 80, rectWidth = 80;
+            let keep_gamblin = 0.25, sweet_amnt = 1, purple_amnt = 10, green_amnt = 50;
+            let gambucks;
+            let numPurples, numGreens, hitChance, hitChance_green;
+            function init() {
+                numPurples = 0;
+                numGreens = 0;
+                hitChance = 1;
+                hitChance_green = 0.25;
+                gambucks = 10;
+                console.log("hit chance: " + hitChance)
+                console.log("hit chance_green: " + hitChance_green)
+                document.getElementById("hitchancestat").innerHTML = "hit chance_purple: " + hitChance;
+                document.getElementById("hitchancegreen").innerHTML = "hit chance_green: " + hitChance_green;
+                document.getElementById("purplesgotten").innerHTML = "num purples: " + numPurples;
+                document.getElementById("greensgotten").innerHTML = "num greens: " + numGreens;
+                document.getElementById("gambuck_count").innerHTML = gambucks;
+            }
+            function checkStats() {
+                console.log("hit chance: " + hitChance)
+                console.log("hit chance_green: " + hitChance_green)
+                console.log("num purples: " + numPurples)
+                console.log("num greens: " + numGreens)
+                refreshStats();
+            }
+            function refreshStats() {
+                document.getElementById("hitchancestat").innerHTML = "hit chance_purple: " + hitChance;
+                document.getElementById("hitchancegreen").innerHTML = "hit chance_green: " + hitChance_green;
+                document.getElementById("purplesgotten").innerHTML = "num purples: " + numPurples;
+                document.getElementById("greensgotten").innerHTML = "num greens: " + numGreens;
+                document.getElementById("gambuck_count").innerHTML = gambucks;
+            }
+            function showHit(anim, img) {
+                anim.hidden = false;
+                img.hidden = true;
+            }
+            function gambucksAnim(amnt) {
+                let insertAnim;
+                switch(amnt) {
+                    case sweet_amnt:
+                        insertAnim = "<p class=fade style=color:pink; font-size:5em;> +" + amnt + "</p>"
+                        break;
+                    case purple_amnt:
+                        insertAnim = "<p class=fade style=color:purple; font-size:5em;> +" + amnt + "</p>"
+                        break;
+                    case green_amnt:
+                        insertAnim = "<p class=fade style=color:green; font-size:5em;> +" + amnt + "</p>"
+                        break;
+                    default:
+                        insertAnim = "<p class=fade style=color:red; font-size:5em;> -" + amnt + "</p>"
+                }
+                document.getElementById("gambucks_display").innerHTML = insertAnim;
+            }
+            function pullSquare() {
+                let hitimg = document.getElementById("hitimg");
+                let hitanim = document.getElementById("hit_anim");
+                hitimg.hidden = false;
+                hitanim.hidden = true;
+                let canvas = document.getElementById("myCanvas")
+                let context = canvas.getContext("2d")
+                var img = document.getElementById("gamblin")
+                let x = Math.random() * maxX
+                let y = Math.random() * maxY
+                let luckyNum = Math.random() * 100
+                console.log(luckyNum)
+                //check if "sweet"
+                if (luckyNum >= 70 && luckyNum <= 85) {
+                    console.log("HIT");
+                    showHit(hitanim, hitimg);
+                    img = document.getElementById("sweet")
+                    gambucks += sweet_amnt;
+                    gambucksAnim(1);
+                    refreshStats();
+                }
+                //check if "purple"
+                else if (luckyNum >= 50 && luckyNum <= 50 + hitChance) {
+                    console.log("HIT!")
+                    showHit(hitanim, hitimg);
+                    if (luckyNum >= 50.1 && luckyNum <= 50.2) {
+                        img = document.getElementById("ohyeah_legacy")
+                    }
+                    else {
+                        img = document.getElementById("ohyeah")
+                    }
+                    if (hitChance < 5) {
+                        hitChance += 0.5;
+                    }
+                    numPurples++;
+                    gambucks += purple_amnt;
+                    gambucksAnim(10);
+                    refreshStats();
+                }
+                //check if green
+                else if (luckyNum >= 30 && luckyNum <= 30 + hitChance_green) {
+                    console.log("HIT!")
+                    showHit(hitanim, hitimg);
+                    img = document.getElementById("fuckyeah")
+                    if (hitChance_green < 1) {
+                        hitChance_green += 0.25;
+                    }
+                    numGreens++;
+                    gambucks += green_amnt;
+                    gambucksAnim(50);
+                    refreshStats();
+                }
+                //no hit
+                else {
+                    gambucks -= keep_gamblin;
+                    gambucksAnim(keep_gamblin);
+                    refreshStats();
+                }
+                //handle images staying in bounds
+                if (x > maxX - rectWidth) {
+                    x = maxX - rectWidth;
+                }
+                if (y > maxY - rectHeight) {
+                    y = maxY - rectHeight;
+                }
+                //draw whatever is pulled; hello; hello
+                context.drawImage(img, x, y)
+            }
+        </script>
+    </head>
+    <body onload="init();">
+        <table><td><img src="assets/logo_anim (2).gif" width="320" height="160"></td>
+            <td id="hitimg"><img src="assets/hit.png" style="opacity:0.25"></td>
+            <td id="hit_anim" hidden="true"><img src="assets/hit_anim_2.gif" height="80" width="320"></td>
+            <td><img src="assets/gambucklogo.png"></td>
+            <td><p id="gambuck_count" class="counter"></p></td>
+            <td id="gambucks_display" class="importantNums"></td></table>
+        <img id="gamblin" src="assets/KEEPGAMBLIN_4.png" hidden="true">
+        <img id="ohyeah_legacy" src="assets/OHYEAH.png" hidden="true">
+        <img id="ohyeah" src="assets/OHYEAH_2.png" hidden="true">
+        <img id="fuckyeah" src="assets/ohfuckyeah.png" hidden="true">
+        <img id="sweet" src="assets/sweet.png" hidden="true">
+        <table><tr><td><canvas id="myCanvas" width="800" height="600"></canvas></td><td>stats<br/><ul><li id="hitchancestat"></li><li id="hitchancegreen"></li><li id="purplesgotten"></li><li id="greensgotten"></li></ul></td></tr>
+        <tr><td><input type="button" value="new pull (-0.25)" onclick="pullSquare();"></td><td></input><input type="button" value="check state" onclick="checkStats();"></input></td></tr></table>
+    </body>
+</html>

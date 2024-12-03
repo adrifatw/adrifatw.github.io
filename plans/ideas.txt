@@ -1,0 +1,2 @@
+start with 10 gambucks
+each keep gambling -0.5 gambuck
